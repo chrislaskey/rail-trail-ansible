@@ -1,0 +1,27 @@
+---
+
+  # This noop is required to gather `ansible_env` facts
+- hosts: all
+
+- hosts: dbservers
+  roles:
+    - common
+    - postgres
+
+- hosts: webservers
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/home/ubuntu/.gem/ruby/2.3.0/bin/"
+    RAILS_ENV: production
+  roles:
+    - common
+    - node
+    - ruby
+    - app
+    - unicorn
+    - nginx
+    - ssl
+
+  # Run nginx again to ensure SSL changes are
+- hosts: webservers
+  roles:
+    - nginx

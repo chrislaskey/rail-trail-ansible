@@ -1,0 +1,11 @@
+---
+
+lets_encrypt_domain: "example.com"
+lets_encrypt_email: "<email>"
+
+devise_secret_key: "<random-string>"
+facebook_key: "<key>"
+facebook_secret: "<secret>"
+mail_sender: "<no-reply-email-address>"
+rails_env: "production"
+secret_key_base: "<secret>"

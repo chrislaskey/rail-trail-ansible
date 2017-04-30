@@ -1,0 +1,30 @@
+---
+
+- name: Install packages
+  apt:
+    name: nginx
+    state: present
+  become: true
+
+- name: Install nginx config
+  template:
+    src: default.j2
+    dest: /etc/nginx/sites-available/rail-trail
+  become: true
+
+- name: Enable site
+  file:
+    src: /etc/nginx/sites-available/rail-trail
+    dest: /etc/nginx/sites-enabled/rail-trail
+    state: link
+  become: true
+
+- name: Disable default site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  become: true
+
+- name: Reload nginx configs
+  shell: systemctl reload nginx
+  become: true

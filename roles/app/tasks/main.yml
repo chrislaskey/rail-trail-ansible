@@ -1,0 +1,38 @@
+---
+
+- name: Install packages
+  apt:
+    name:
+      - imagemagick
+    state: present
+  become: true
+
+- name: Clone project repository
+  git:
+    repo: git://github.com/chrislaskey/rail-trail.git
+    dest: /home/ubuntu/current
+    accept_hostkey: true
+
+- name: Create ENV file
+  template:
+    src: .env.j2
+    dest: /home/ubuntu/current/.env
+
+- name: Install project gems
+  shell: cd current && bash -lc "bundle install"
+
+- name: Install project database
+  shell: cd current && bash -lc "bundle exec rake db:migrate db:seed"
+
+- name: Remove temp cache
+  shell: rm -rf /home/ubuntu/current/tmp/cache
+  become: true
+
+- name: Precompile assets
+  shell: cd current && bash -lc "bundle exec rails assets:precompile"
+
+- name: Add log rotation config
+  template:
+    src: etc/logrotate.d/rail-trail.j2
+    dest: /etc/logrotate.d/rail-trail
+  become: true

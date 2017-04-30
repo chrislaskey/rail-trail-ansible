@@ -1,0 +1,22 @@
+---
+
+- name: Install packages
+  apt:
+    name:
+      - ruby-dev
+    state: present
+  become: true
+
+- name: Update path to include ruby gems
+  lineinfile:
+    name: /home/ubuntu/.bashrc
+    regexp: '^PATH='
+    line: "PATH=$PATH:~/.gem/ruby/2.3.0/bin"
+
+- name: Install bundler
+  gem:
+    name: bundler
+    state: latest
+
+- name: Configure bundler
+  shell: bundle config build.nio4r --with-cflags="-std=c99"
