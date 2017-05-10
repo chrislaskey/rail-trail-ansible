@@ -2,12 +2,6 @@ upstream app {
   server unix:/home/ubuntu/current/tmp/unicorn.sock fail_timeout=0;
 }
 
-# Domain redirect
-server {
-  server_name .swampscott-rail-trail.com;
-  return 301 http://swampscottrailtrail.com$request_uri;
-}
-
 {% if ssl_cert is defined and ssl_cert.stat.exists == true %}
 server {
   listen 80;
@@ -24,8 +18,8 @@ server {
   listen [::]:443 ssl http2;
   server_name localhost;
 
-  ssl_certificate /etc/letsencrypt/live/{{ lets_encrypt_domain }}/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/{{ lets_encrypt_domain }}/privkey.pem;
+  ssl_certificate /etc/letsencrypt/live/www.{{ lets_encrypt_domain }}/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/www.{{ lets_encrypt_domain }}/privkey.pem;
 
   {% else %}
 

@@ -8,7 +8,7 @@
 
 - name: Check if SSL cert already exists
   stat:
-    path: "/etc/letsencrypt/live/{{ lets_encrypt_domain }}/fullchain.pem"
+    path: "/etc/letsencrypt/live/www.{{ lets_encrypt_domain }}/fullchain.pem"
   become: true
   register: ssl_cert
 
