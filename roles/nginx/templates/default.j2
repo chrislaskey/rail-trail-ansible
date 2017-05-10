@@ -31,6 +31,8 @@ server {
 
   root /home/ubuntu/current/public;
 
+  rewrite ^/(.*)/$ /$1 permanent;
+
   try_files /cache/$uri /cache/$uri.html /cache/$1.html $uri/index.html $uri @app;
 
   location @app {
