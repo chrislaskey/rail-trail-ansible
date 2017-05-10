@@ -2,6 +2,12 @@ upstream app {
   server unix:/home/ubuntu/current/tmp/unicorn.sock fail_timeout=0;
 }
 
+# Domain redirect
+server {
+  server_name .swampscott-rail-trail.com;
+  return 301 http://swampscottrailtrail.com$request_uri;
+}
+
 {% if ssl_cert is defined and ssl_cert.stat.exists == true %}
 server {
   listen 80;
