@@ -36,3 +36,10 @@
     src: etc/logrotate.d/rail-trail.j2
     dest: /etc/logrotate.d/rail-trail
   become: true
+
+- name: Clear page cache
+  cron:
+    name: Clear page cache
+    minute: 5
+    job: /bin/rm -rf /home/ubuntu/current/public/cache/
+  become: yes
