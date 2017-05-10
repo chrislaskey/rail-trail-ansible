@@ -37,9 +37,9 @@
     dest: /etc/logrotate.d/rail-trail
   become: true
 
-- name: Clear page cache
+- name: Clear page cache every 5 minutes
   cron:
     name: Clear page cache
-    minute: 5
+    minute: "*/5"
     job: /bin/rm -rf /home/ubuntu/current/public/cache/
   become: yes
